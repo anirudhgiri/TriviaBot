@@ -1,0 +1,9 @@
+{
+  "embed": {
+    "color" : 16766720,
+    "description": ":trophy::rotating_light::rotating_light: ***TRIVIA TIME!!*** :rotating_light::rotating_light::trophy:\n\n**QUESTION :**\n*What is the term for a wrestler who is known to lose matches often?*\n\nA) Baby Face\nB) Jobber\nC) Heel\nD) Curtain Jerker\n\n:trophy::trophy::trophy::trophy::trophy::trophy::trophy::trophy::trophy::trophy:", 
+    "footer" : {
+      "text" : "Which option (A/B/C/D) do you think is correct? You have 10 seconds to enter the correct answer for a chance to win the Hardcore Championship!"
+    }
+  }
+}
