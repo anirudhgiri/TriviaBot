@@ -1,0 +1,19 @@
+[
+    {
+        "Question" : "What is the term for a wrestler who is known to lose often?",
+        "A" : "Baby Face",
+        "B" : "Jobber",
+        "C" : "Heel",
+        "D" : "Curtain Jerker",
+        "Answer" : "B"
+    },
+
+    {
+        "Question" : "Which Hollywood celebrity did Hulk Hogan tag with in the main event of the very first WrestleMania?",
+        "A" : "Will Smith",
+        "B" : "Arnold Schwarzenegger",
+        "C" : "Mr T",
+        "D" : "Dwayne \"The Rock\" Johnson",
+        "Answer" : "C"
+    }
+]

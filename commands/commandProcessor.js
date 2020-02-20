@@ -1,6 +1,7 @@
 const discord = require("discord.js")
 const ping = require("./ping/ping")
-const changePrefix = require("../app")
+const app = require("../app")
+const spawntrivia = require("./spawntrivia/spawntrivia")
 
 /**
  * 
@@ -16,7 +17,13 @@ function processCommand(message, prefix){
         case "ping" : ping.ping(message)
                       break
         
-        case "prefix" : changePrefix.changePrefix(msg[1])
+        case "prefix" : app.changePrefix(msg[1])
+                        break
+        
+        case "trivia" : spawntrivia.spawnTrivia(message)
+                        break
+        
+        case "hitrate" : app.setHitRate(msg[1])
                         break
     }
 }

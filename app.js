@@ -35,8 +35,10 @@ function changePrefix(newPrefix){
  * 
  * @param {string} newHitrate The new probability at which the trivia question spawns as a %
  */
-function hitRate(newHitrate){
+function setHitRate(newHitrate){
     if(newHitrate !== null && newHitrate !== ' ' && !isNaN(newHitrate))
         hitRate = Number(newHitrate)/100
 }
+
 module.exports.changePrefix = changePrefix;
+module.exports.setHitRate = setHitRate;
