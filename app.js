@@ -1,13 +1,24 @@
 const discord = require("discord.js")
 const client = new discord.Client()
 
-require("dotenv").config()
-
-const commandProcessor = require("./commands/commandProcessor")
+const fs = require("fs")
+const questions = JSON.parse(fs.readFileSync("questions.json"))
 
 let hitRate = 0.1
 let prefix = '~'
 
+let currentChampion
+
+let inTriviaMode = false
+let start
+let eventChannel
+let submissions = "Submissions Received:"
+let contestants = []
+let answer
+
+let trigMessage
+
+require("dotenv").config()
 client.login(process.env.CLIENT_TOKEN)
 
 client.on("ready", () => {
@@ -16,11 +27,45 @@ client.on("ready", () => {
 
 client.on("message",(msg) => {
     if(msg.author.bot) return;
+    if(inTriviaMode)
+        spawnTrivia(msg)
     
-    if(msg.content.substring(0,prefix.length) == prefix)
-        commandProcessor.processCommand(msg,prefix)
+    else if(msg.content.substring(0,prefix.length) == prefix)
+        processCommand(msg,prefix)
+    
 })
 
+/**
+ * 
+ * @param {discord.Message} message The message identified as a command
+ */
+function processCommand(message){
+    let msg = message.content.split(' ')
+    let command = msg[0]
+    command = command.slice(prefix.length)
+
+    switch(command){
+        case "ping" : ping(message)
+                      break
+        
+        case "prefix" : changePrefix(msg[1])
+                        break
+        
+        case "trivia" : spawnTrivia(message)
+                        break
+        
+        case "hitrate" : setHitRate(msg[1])
+                        break
+    }
+}
+
+/**
+ * 
+ * @param {discord.Message} message The message identified as a command
+ */
+function ping(message){
+    message.reply(`Pong! \`${Math.floor((Date.now() - message.createdTimestamp)/100)}ms\``)
+}
 
 /**
  * 
@@ -40,5 +85,67 @@ function setHitRate(newHitrate){
         hitRate = Number(newHitrate)/100
 }
 
-module.exports.changePrefix = changePrefix;
-module.exports.setHitRate = setHitRate;
+/**
+ * 
+ * @param {discord.Message} message The message that triggered the trivia event
+ */
+function spawnTrivia(message){
+    if(!inTriviaMode){
+        trivia = questions[Math.floor(Math.random()*questions.length)]
+    
+        let embed = new discord.RichEmbed()
+        .setColor("#FFD700")
+        .setDescription(`:trophy::rotating_light::rotating_light: ***TRIVIA TIME!!*** :rotating_light::rotating_light::trophy:\n\n**QUESTION :**\n*${trivia.Question}*\n\nA) ${trivia.A}\nB) ${trivia.B}\nC) ${trivia.C}\nD) ${trivia.D}\n\n:trophy::trophy::trophy::trophy::trophy::trophy::trophy::trophy::trophy::trophy:`)
+        .setFooter("Which option (A/B/C/D) do you think is correct? You have 10 seconds to enter the correct answer for a chance to win the Hardcore Championship!")
+    
+        message.channel.send(embed).then(()=>{
+            message.channel.send("\`\`\`"+submissions+"\`\`\`")
+        })
+
+        inTriviaMode = true
+        console.log("Trivia mode set to true")
+        start = Date.now()
+        eventChannel = message.channel
+        answer = trivia.Answer
+        setTimeout((trigMessage = message) => {
+            trigMessage.channel.send(":rotating_light::rotating_light: TIME'S UP! :rotating_light::rotating_light:")
+            inTriviaMode = false
+            start = 0
+            submissions = "Submissions Received:"
+            let winner = contestants[Math.floor(Math.random()*contestants.length)]
+            makeChampion(winner,eventChannel)
+            contestants = []
+            eventChannel = null
+        },10000)
+        return
+    }
+    else{
+        //console.log(Date.now()-start)
+        let sub = message.content.trim().toUpperCase()
+        if(contestants.includes(message.author)) {
+            console.log("Already in raffle")
+            return
+        }
+        if(sub.length == 1 && (sub == 'A' || sub == 'B' || sub == 'C' || sub == 'D')){
+           submissions += `\n${message.author.username}`
+            client.user.lastMessage.edit("\`\`\`"+submissions+"\`\`\`")
+            if(sub == answer)
+                contestants.push(message.author)
+        }
+       
+    }
+}
+
+/**
+ * 
+ * @param {discord.User} winner The winner of the raffle
+ * @param {discord.TextChannel} eventChannel The channel where the trivia event took place
+ */
+function makeChampion(winner,eventChannel){
+    if(currentChampion == winner)
+        eventChannel.send(`🥊🥊🥊 ${winner.toString()} has successfully defended the title!! 🥊🥊🥊`)
+    else{
+    eventChannel.send(`🎉🎉🎉${winner.toString()} is the new Hardcore Champion!! 🎉🎉🎉`)
+    currentChampion = winner
+    }
+}
