@@ -4,9 +4,10 @@ const client = new discord.Client()
 const fs = require("fs")
 const questions = JSON.parse(fs.readFileSync("questions.json"))
 
+let guild = " "
 let hitRate = 0.1
 let prefix = '~'
-
+let roleID = process.env.ROLE_ID
 let currentChampion
 
 let inTriviaMode = false
@@ -27,12 +28,13 @@ client.on("ready", () => {
 
 client.on("message",(msg) => {
     if(msg.author.bot) return;
+    
     if(inTriviaMode)
         spawnTrivia(msg)
-    
+    else if(msg.author == getCurrentChampion(msg) && Math.random() < hitRate)
+        spawnTrivia(msg)
     else if(msg.content.substring(0,prefix.length) == prefix)
         processCommand(msg,prefix)
-    
 })
 
 /**
@@ -87,6 +89,16 @@ function setHitRate(newHitrate){
 
 /**
  * 
+ * @param {discord.Message} message 
+ */
+function getCurrentChampion(message){
+    if (guild == " ")
+        guild = message.guild
+    return guild.roles.get(roleID).members.array()[0]
+}
+
+/**
+ * 
  * @param {discord.Message} message The message that triggered the trivia event
  */
 function spawnTrivia(message){
@@ -120,32 +132,31 @@ function spawnTrivia(message){
         return
     }
     else{
-        //console.log(Date.now()-start)
         let sub = message.content.trim().toUpperCase()
-        if(contestants.includes(message.author)) {
-            console.log("Already in raffle")
+        if(contestants.includes(message.author))
             return
-        }
         if(sub.length == 1 && (sub == 'A' || sub == 'B' || sub == 'C' || sub == 'D')){
            submissions += `\n${message.author.username}`
             client.user.lastMessage.edit("\`\`\`"+submissions+"\`\`\`")
             if(sub == answer)
-                contestants.push(message.author)
+                contestants.push(message.member)
         }
-       
     }
 }
 
 /**
  * 
- * @param {discord.User} winner The winner of the raffle
+ * @param {discord.GuildMember} winner The winner of the raffle
  * @param {discord.TextChannel} eventChannel The channel where the trivia event took place
  */
 function makeChampion(winner,eventChannel){
-    if(currentChampion == winner)
+    if(getCurrentChampion() == winner)
         eventChannel.send(`🥊🥊🥊 ${winner.toString()} has successfully defended the title!! 🥊🥊🥊`)
     else{
     eventChannel.send(`🎉🎉🎉${winner.toString()} is the new Hardcore Champion!! 🎉🎉🎉`)
-    currentChampion = winner
+    hc_role = eventChannel.guild.roles.get(roleID)
+    if(getCurrentChampion())
+    getCurrentChampion().removeRole(hc_role)
+    winner.addRole(hc_role)
     }
 }
