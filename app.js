@@ -1,6 +1,8 @@
 const discord = require("discord.js")
 const client = new discord.Client()
 
+require("dotenv").config()
+
 const fs = require("fs")
 const questions = JSON.parse(fs.readFileSync("questions.json"))
 
@@ -19,7 +21,6 @@ let answer
 
 let trigMessage
 
-require("dotenv").config()
 client.login(process.env.CLIENT_TOKEN)
 
 client.on("ready", () => {
@@ -28,10 +29,9 @@ client.on("ready", () => {
 
 client.on("message",(msg) => {
     if(msg.author.bot) return;
-    
     if(inTriviaMode)
         spawnTrivia(msg)
-    else if(msg.author == getCurrentChampion(msg) && Math.random() < hitRate)
+    else if(msg.member == getCurrentChampion(msg) && Math.random() < hitRate)
         spawnTrivia(msg)
     else if(msg.content.substring(0,prefix.length) == prefix)
         processCommand(msg,prefix)
@@ -104,11 +104,11 @@ function getCurrentChampion(message){
 function spawnTrivia(message){
     if(!inTriviaMode){
         trivia = questions[Math.floor(Math.random()*questions.length)]
-    
+        message.channel.send(`<@&${process.env.ROLE_ID}>`)
         let embed = new discord.RichEmbed()
         .setColor("#FFD700")
         .setDescription(`:trophy::rotating_light::rotating_light: ***TRIVIA TIME!!*** :rotating_light::rotating_light::trophy:\n\n**QUESTION :**\n*${trivia.Question}*\n\nA) ${trivia.A}\nB) ${trivia.B}\nC) ${trivia.C}\nD) ${trivia.D}\n\n:trophy::trophy::trophy::trophy::trophy::trophy::trophy::trophy::trophy::trophy:`)
-        .setFooter("Which option (A/B/C/D) do you think is correct? You have 10 seconds to enter the correct answer for a chance to win the Hardcore Championship!")
+        .setFooter(`Which option (A/B/C/D) do you think is correct? You have 10 seconds to enter the correct answer for a chance to win the Hardcore Championship!`)
     
         message.channel.send(embed).then(()=>{
             message.channel.send("\`\`\`"+submissions+"\`\`\`")
