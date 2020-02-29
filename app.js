@@ -149,7 +149,17 @@ function spawnTrivia(message){
             inTriviaMode = false
             start = 0
             submissions = "Submissions Received:"
-            let winner = contestants[Math.floor(Math.random()*contestants.length)]
+            let winner = " "
+            contestants.forEach(function(c){
+                if(c == getCurrentChampion()){
+                    console.log("Champ is here")
+                    winner = c
+                }
+            })
+            if(winner == " "){
+            console.log("Champ is not here")
+            winner = contestants[Math.floor(Math.random()*contestants.length)]
+            }
             makeChampion(winner,eventChannel)
             contestants = []
             eventChannel = null
@@ -175,8 +185,8 @@ function spawnTrivia(message){
  * @param {discord.TextChannel} eventChannel The channel where the trivia event took place
  */
 function makeChampion(winner,eventChannel){
-    if(getCurrentChampion() == winner)
-        eventChannel.send(`🥊🥊🥊 ${winner.toString()} has successfully defended the title!! 🥊🥊🥊`)
+    if(!winner || getCurrentChampion() == winner)
+        eventChannel.send(`🥊🥊🥊 ${getCurrentChampion()} has successfully defended the title!! 🥊🥊🥊`)
     else{
     eventChannel.send(`🎉🎉🎉${winner.toString()} is the new Hardcore Champion!! 🎉🎉🎉`)
     hc_role = eventChannel.guild.roles.get(roleID)
