@@ -7,7 +7,7 @@ const fs = require("fs")
 const questions = JSON.parse(fs.readFileSync("questions.json"))
 
 let guild = " "
-let hitRate = 0.1
+let hitRate = 0.01
 let prefix = '~'
 let roleID = process.env.ROLE_ID
 let currentChampion
@@ -50,7 +50,7 @@ function processCommand(message){
         case "ping" : ping(message)
                       break
         
-        case "prefix" : changePrefix(msg[1])
+        case "prefix" : changePrefix(message,msg[1])
                         break
         
         case "trivia" : spawnTrivia(message)
@@ -58,7 +58,30 @@ function processCommand(message){
         
         case "hitrate" : setHitRate(msg[1])
                         break
+        
+        case "help" : help(message)
+                      break
     }
+}
+
+/**
+ * 
+ * @param {discord.Message} message 
+ */
+function help(message){
+    let embed = new discord.RichEmbed()
+    .setColor("#FFD700")
+    .setDescription(`:trophy::trophy::trophy: **TRIVIA BOT V1.0.0** :trophy::trophy::trophy:
+    Prefix   : \`${prefix}\`
+    Ping     : \`${Math.floor((Date.now() - message.createdTimestamp)/100)}ms\` 
+    Hit Rate : \`${hitRate*100}%\`
+    ---*Commands*---
+    \`${prefix}ping\` : Ping time in milliseconds
+    \`${prefix}currentchamp\` : Tells you who the current champion is
+    \`${prefix}trivia (STAFF ONLY)\` : Forces a trivia event
+    \`${prefix}hitrate (STAFF ONLY)\` : Changes the % probability of a trivia event spawning
+    `)
+    message.channel.send(embed)
 }
 
 /**
@@ -71,9 +94,11 @@ function ping(message){
 
 /**
  * 
+ * @param {discord.Message} message The message identified as a command
  * @param {string} newPrefix The new prefix to be changed to
  */
-function changePrefix(newPrefix){
+function changePrefix(message,newPrefix){
+    message.channel.send(`Changed Prefix From \`${prefix}\` to \`${newPrefix}\``)
     if(newPrefix !== null && newPrefix !== ' ')
     prefix = newPrefix
 }
