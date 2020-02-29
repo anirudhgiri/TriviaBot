@@ -27,12 +27,13 @@ client.on("ready", () => {
 
 client.on("message",(msg) => {
     if(msg.author.bot) return;
+    
     if(inTriviaMode)
         spawnTrivia(msg)
-    
+    else if(msg.author == currentChampion && Math.random() > hitRate)
+        spawnTrivia(msg)
     else if(msg.content.substring(0,prefix.length) == prefix)
         processCommand(msg,prefix)
-    
 })
 
 /**
@@ -120,25 +121,21 @@ function spawnTrivia(message){
         return
     }
     else{
-        //console.log(Date.now()-start)
         let sub = message.content.trim().toUpperCase()
-        if(contestants.includes(message.author)) {
-            console.log("Already in raffle")
+        if(contestants.includes(message.author))
             return
-        }
         if(sub.length == 1 && (sub == 'A' || sub == 'B' || sub == 'C' || sub == 'D')){
            submissions += `\n${message.author.username}`
             client.user.lastMessage.edit("\`\`\`"+submissions+"\`\`\`")
             if(sub == answer)
-                contestants.push(message.author)
+                contestants.push(message.member)
         }
-       
     }
 }
 
 /**
  * 
- * @param {discord.User} winner The winner of the raffle
+ * @param {discord.GuildMember} winner The winner of the raffle
  * @param {discord.TextChannel} eventChannel The channel where the trivia event took place
  */
 function makeChampion(winner,eventChannel){
@@ -146,6 +143,8 @@ function makeChampion(winner,eventChannel){
         eventChannel.send(`🥊🥊🥊 ${winner.toString()} has successfully defended the title!! 🥊🥊🥊`)
     else{
     eventChannel.send(`🎉🎉🎉${winner.toString()} is the new Hardcore Champion!! 🎉🎉🎉`)
+    hc_role = eventChannel.guild.roles.get("683263039734415391")
+    winner.addRole(hc_role)
     currentChampion = winner
     }
 }
