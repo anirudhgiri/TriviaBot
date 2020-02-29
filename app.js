@@ -4,9 +4,10 @@ const client = new discord.Client()
 const fs = require("fs")
 const questions = JSON.parse(fs.readFileSync("questions.json"))
 
+let guild = " "
 let hitRate = 0.1
 let prefix = '~'
-
+let roleID = "683263039734415391"
 let currentChampion
 
 let inTriviaMode = false
@@ -30,7 +31,7 @@ client.on("message",(msg) => {
     
     if(inTriviaMode)
         spawnTrivia(msg)
-    else if(msg.author == currentChampion && Math.random() > hitRate)
+    else if(msg.author == getCurrentChampion(msg) && Math.random() < hitRate)
         spawnTrivia(msg)
     else if(msg.content.substring(0,prefix.length) == prefix)
         processCommand(msg,prefix)
@@ -88,6 +89,16 @@ function setHitRate(newHitrate){
 
 /**
  * 
+ * @param {discord.Message} message 
+ */
+function getCurrentChampion(message){
+    if (guild == " ")
+        guild = message.guild
+    return guild.roles.get(roleID).members.array()[0]
+}
+
+/**
+ * 
  * @param {discord.Message} message The message that triggered the trivia event
  */
 function spawnTrivia(message){
@@ -139,12 +150,13 @@ function spawnTrivia(message){
  * @param {discord.TextChannel} eventChannel The channel where the trivia event took place
  */
 function makeChampion(winner,eventChannel){
-    if(currentChampion == winner)
+    if(getCurrentChampion() == winner)
         eventChannel.send(`🥊🥊🥊 ${winner.toString()} has successfully defended the title!! 🥊🥊🥊`)
     else{
     eventChannel.send(`🎉🎉🎉${winner.toString()} is the new Hardcore Champion!! 🎉🎉🎉`)
-    hc_role = eventChannel.guild.roles.get("683263039734415391")
+    hc_role = eventChannel.guild.roles.get(roleID)
+    if(getCurrentChampion())
+    getCurrentChampion().removeRole(hc_role)
     winner.addRole(hc_role)
-    currentChampion = winner
     }
 }
