@@ -7,7 +7,7 @@ const questions = JSON.parse(fs.readFileSync("questions.json"))
 let guild = " "
 let hitRate = 0.1
 let prefix = '~'
-let roleID = "683263039734415391"
+let roleID = process.env.ROLE_ID
 let currentChampion
 
 let inTriviaMode = false
