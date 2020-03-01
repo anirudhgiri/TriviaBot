@@ -70,7 +70,7 @@ function processCommand(message){
 
 /**
  * 
- * @param {discord.Message} message 
+ * @param {discord.Message} message The message identified as a command
  */
 function help(message){
     let embed = new discord.RichEmbed()
@@ -122,7 +122,7 @@ function setHitRate(message,newHitrate){
 
 /**
  * 
- * @param {discord.Message} message 
+ * @param {discord.Message} message The message identified as a command
  */
 function getCurrentChampion(message){
     if (guild == " ")
@@ -132,7 +132,7 @@ function getCurrentChampion(message){
 
 /**
  * 
- * @param {discord.Message} message 
+ * @param {discord.Message} message The message identified as a command
  */
 function currentchamp(message){
     champ = getCurrentChampion()
