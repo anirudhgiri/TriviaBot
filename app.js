@@ -9,7 +9,9 @@ const questions = JSON.parse(fs.readFileSync("questions.json"))
 let guild = " "
 let hitRate = 0.01
 let prefix = '~'
-let roleID = process.env.ROLE_ID
+
+let ChampRoleID = process.env.CHAMP_ROLE_ID
+let AdminRoleID = process.env.ADMIN_ROLE_ID
 
 let currentChampion
 
@@ -30,6 +32,8 @@ client.on("ready", () => {
 
 client.on("message",(msg) => {
     if(msg.author.bot) return;
+    if(guild == " ")
+        getCurrentChampion(msg)
     if(inTriviaMode)
         spawnTrivia(msg)
     else if(msg.content.substring(0,prefix.length) == prefix)
@@ -54,7 +58,8 @@ function processCommand(message){
         case "prefix" : changePrefix(message,msg[1])
                         break
         
-        case "trivia" : spawnTrivia(message)
+        case "trivia" : if(message.member.roles.has(AdminRoleID))
+                            spawnTrivia(message)
                         break
         
         case "hitrate" : setHitRate(message,msg[1])
@@ -127,7 +132,7 @@ function setHitRate(message,newHitrate){
 function getCurrentChampion(message){
     if (guild == " ")
         guild = message.guild
-    return guild.roles.get(roleID).members.array()[0]
+    return guild.roles.get(ChampRoleID).members.array()[0]
 }
 
 /**
@@ -206,7 +211,7 @@ function makeChampion(winner,eventChannel){
         eventChannel.send(`🥊🥊🥊 ${getCurrentChampion()} has successfully defended the title!! 🥊🥊🥊`)
     else{
     eventChannel.send(`🎉🎉🎉${winner.toString()} is the new Hardcore Champion!! 🎉🎉🎉`)
-    hc_role = eventChannel.guild.roles.get(roleID)
+    hc_role = eventChannel.guild.roles.get(ChampRoleID)
     if(getCurrentChampion())
     getCurrentChampion().removeRole(hc_role)
     winner.addRole(hc_role)
