@@ -10,6 +10,7 @@ let guild = " "
 let hitRate = 0.01
 let prefix = '~'
 let roleID = process.env.ROLE_ID
+
 let currentChampion
 
 let inTriviaMode = false
@@ -31,10 +32,10 @@ client.on("message",(msg) => {
     if(msg.author.bot) return;
     if(inTriviaMode)
         spawnTrivia(msg)
-    else if(msg.member == getCurrentChampion(msg) && Math.random() < hitRate)
-        spawnTrivia(msg)
     else if(msg.content.substring(0,prefix.length) == prefix)
         processCommand(msg,prefix)
+    else if(msg.member == getCurrentChampion(msg) && Math.random() < hitRate && msg.channel.parent.name == "Wrestling Channels")
+        spawnTrivia(msg)
 })
 
 /**
@@ -56,11 +57,14 @@ function processCommand(message){
         case "trivia" : spawnTrivia(message)
                         break
         
-        case "hitrate" : setHitRate(msg[1])
+        case "hitrate" : setHitRate(message,msg[1])
                         break
         
         case "help" : help(message)
                       break
+        
+        case "currentchamp" : currentchamp(message)
+                              break
     }
 }
 
@@ -73,11 +77,12 @@ function help(message){
     .setColor("#FFD700")
     .setDescription(`:trophy::trophy::trophy: **TRIVIA BOT V1.0.0** :trophy::trophy::trophy:
     Prefix   : \`${prefix}\`
-    Ping     : \`${Math.floor((Date.now() - message.createdTimestamp)/100)}ms\` 
+    Ping     : \`${Math.floor(message.client.ping/100)}ms\`
     Hit Rate : \`${hitRate*100}%\`
     ---*Commands*---
     \`${prefix}ping\` : Ping time in milliseconds
     \`${prefix}currentchamp\` : Tells you who the current champion is
+    \`${prefix}prefix (STAFF ONLY)\` : Chances the prefix for commands
     \`${prefix}trivia (STAFF ONLY)\` : Forces a trivia event
     \`${prefix}hitrate (STAFF ONLY)\` : Changes the % probability of a trivia event spawning
     `)
@@ -89,7 +94,7 @@ function help(message){
  * @param {discord.Message} message The message identified as a command
  */
 function ping(message){
-    message.reply(`Pong! \`${Math.floor((Date.now() - message.createdTimestamp)/100)}ms\``)
+    message.reply(`Pong! \`${Math.floor(message.client.ping/100)}ms\``)
 }
 
 /**
@@ -105,11 +110,14 @@ function changePrefix(message,newPrefix){
 
 /**
  * 
+ * @param {discord.Message} message The message identified as a command
  * @param {string} newHitrate The new probability at which the trivia question spawns as a %
  */
-function setHitRate(newHitrate){
-    if(newHitrate !== null && newHitrate !== ' ' && !isNaN(newHitrate))
+function setHitRate(message,newHitrate){
+    if(newHitrate !== null && newHitrate !== ' ' && !isNaN(newHitrate)){
+        message.channel.send(`Changed Hitrate from \`${hitRate*100}%\` to \`${newHitrate}%\``)
         hitRate = Number(newHitrate)/100
+    }
 }
 
 /**
@@ -120,6 +128,15 @@ function getCurrentChampion(message){
     if (guild == " ")
         guild = message.guild
     return guild.roles.get(roleID).members.array()[0]
+}
+
+/**
+ * 
+ * @param {discord.Message} message 
+ */
+function currentchamp(message){
+    champ = getCurrentChampion()
+    message.reply(`:trophy:The current Harcore Champion is \`${champ.nickname}(${champ.user.tag})\`:trophy:`)
 }
 
 /**
