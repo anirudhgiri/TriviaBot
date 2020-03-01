@@ -151,7 +151,7 @@ function currentchamp(message){
 function spawnTrivia(message){
     if(!inTriviaMode){
         trivia = questions[Math.floor(Math.random()*questions.length)]
-        message.channel.send(`<@&${process.env.ROLE_ID}>`)
+        message.channel.send(`<@&${process.env.CHAMP_ROLE_ID}>`)
         let embed = new discord.RichEmbed()
         .setColor("#FFD700")
         .setDescription(`:trophy::rotating_light::rotating_light: ***TRIVIA TIME!!*** :rotating_light::rotating_light::trophy:\n\n**QUESTION :**\n*${trivia.Question}*\n\nA) ${trivia.A}\nB) ${trivia.B}\nC) ${trivia.C}\nD) ${trivia.D}\n\n:trophy::trophy::trophy::trophy::trophy::trophy::trophy::trophy::trophy::trophy:`)
@@ -162,7 +162,6 @@ function spawnTrivia(message){
         })
 
         inTriviaMode = true
-        console.log("Trivia mode set to true")
         start = Date.now()
         eventChannel = message.channel
         answer = trivia.Answer
@@ -173,15 +172,11 @@ function spawnTrivia(message){
             submissions = "Submissions Received:"
             let winner = " "
             contestants.forEach(function(c){
-                if(c == getCurrentChampion()){
-                    console.log("Champ is here")
+                if(c == getCurrentChampion())
                     winner = c
-                }
             })
-            if(winner == " "){
-            console.log("Champ is not here")
-            winner = contestants[Math.floor(Math.random()*contestants.length)]
-            }
+            if(winner == " ")
+                winner = contestants[Math.floor(Math.random()*contestants.length)]
             makeChampion(winner,eventChannel)
             contestants = []
             eventChannel = null
