@@ -24,6 +24,9 @@ let answer
 
 let trigMessage
 
+let giflinks = ['LyJ6KPlrFdKnK','NRXleEopnqL3a','26BkLCUdp1lqUA2JO','doJrCO8kCAgNy','ELTNW5yGKbn9K','WegnQe8QdvpCg']
+let gif_user = ' '
+let gifMessages = ['TEST']
 client.login(process.env.CLIENT_TOKEN)
 
 client.on("ready", () => {
@@ -179,6 +182,10 @@ function spawnTrivia(message){
             if(winner == " ")
                 winner = contestants[Math.floor(Math.random()*contestants.length)]
             makeChampion(winner,eventChannel)
+            setTimeout(() => {
+                sendGif()
+                gif_user = ' '
+            }, 5000);
             contestants = []
             eventChannel = null
         },10000)
@@ -193,6 +200,9 @@ function spawnTrivia(message){
             client.user.lastMessage.edit("\`\`\`"+submissions+"\`\`\`")
             if(sub == answer)
                 contestants.push(message.member)
+        }
+        else if(gifMessages.includes(sub)){
+            gif_user = message
         }
     }
 }
@@ -211,5 +221,13 @@ function makeChampion(winner,eventChannel){
     if(getCurrentChampion())
     getCurrentChampion().removeRole(hc_role)
     winner.addRole(hc_role)
+    }
+}
+
+function sendGif(){
+    if(gif_user != ' '){
+    gif = `https://media.giphy.com/media/${giflinks[Math.floor(Math.random()*giflinks.length)]}/giphy.gif`
+    gif_user.reply("...did you just say...you can't say that on a PG server")
+    gif_user.channel.send(gif)
     }
 }
