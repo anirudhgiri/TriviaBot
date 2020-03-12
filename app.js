@@ -81,9 +81,10 @@ function help(message){
     let embed = new discord.RichEmbed()
     .setColor("#FFD700")
     .setDescription(`:trophy::trophy::trophy: **TRIVIA BOT V1.0.0** :trophy::trophy::trophy:
-    Prefix   : \`${prefix}\`
-    Ping     : \`${Math.floor(message.client.ping/100)}ms\`
-    Hit Rate : \`${hitRate*100}%\`
+    Prefix           : \`${prefix}\`
+    Ping             : \`${Math.floor(message.client.ping/100)}ms\`
+    Hit Rate         : \`${hitRate*100}%\`
+    Current Champion : \`${(getCurrentChampion()?getCurrentChampion().user.tag : "Vacant")}\`
     ---*Commands*---
     \`${prefix}ping\` : Ping time in milliseconds
     \`${prefix}currentchamp\` : Tells you who the current champion is
@@ -141,7 +142,7 @@ function getCurrentChampion(message){
  */
 function currentchamp(message){
     champ = getCurrentChampion()
-    message.reply(`:trophy:The current Harcore Champion is \`${champ.nickname}(${champ.user.tag})\`:trophy:`)
+    message.channel.send(`:trophy:The current Harcore Champion is \`${champ.nickname}(${champ.user.tag})\`:trophy:`)
 }
 
 /**
