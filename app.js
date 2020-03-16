@@ -27,6 +27,8 @@ let trigMessage
 let giflinks = ['LyJ6KPlrFdKnK','NRXleEopnqL3a','26BkLCUdp1lqUA2JO','doJrCO8kCAgNy','ELTNW5yGKbn9K','WegnQe8QdvpCg']
 let gif_user = ' '
 let gifMessages = ['TEST']
+let gifReplies = ["...did you just say...you can't say that on a PG server...", "wh-- what the hell did you just say?", ".....that's your answer?", "....did you seriously say that on a PG server?"]
+
 client.login(process.env.CLIENT_TOKEN)
 
 client.on("ready", () => {
@@ -227,7 +229,8 @@ function makeChampion(winner,eventChannel){
 function sendGif(){
     if(gif_user != ' '){
     gif = `https://media.giphy.com/media/${giflinks[Math.floor(Math.random()*giflinks.length)]}/giphy.gif`
-    gif_user.reply("...did you just say...you can't say that on a PG server")
+    reply = gifReplies[Math.floor(Math.random()*gifReplies.length)]
+    gif_user.reply(reply)
     gif_user.channel.send(gif)
     }
 }
