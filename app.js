@@ -147,8 +147,11 @@ function getCurrentChampion(message){
  */
 function currentchamp(message){
     champ = getCurrentChampion()
-    message.channel.send(`:trophy:The current Harcore Champion is \`${champ.nickname}(${champ.user.tag})\`:trophy:`)
-}
+    if(champ)
+        message.channel.send(`:trophy:The current Harcore Champion is \`${champ.nickname}(${champ.user.tag})\`!:trophy:`)
+    else
+        message.channel.send(`:trophy:The current Harcore Champion is \`Vacant\`!:trophy:`)
+   }
 
 /**
  * 
@@ -226,6 +229,7 @@ function makeChampion(winner,eventChannel){
     }
 }
 
+//A function that sends a Steve Harvey GIF if a message listed in gifMessages is sent
 function sendGif(){
     if(gif_user != ' '){
     gif = `https://media.giphy.com/media/${giflinks[Math.floor(Math.random()*giflinks.length)]}/giphy.gif`

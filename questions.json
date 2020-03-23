@@ -15,5 +15,381 @@
         "C" : "Mr T",
         "D" : "Dwayne \"The Rock\" Johnson",
         "Answer" : "C"
+    },
+    {
+        "Question": "What is the insider term for a wrestler sticking to \"The Script\"?",
+        "A": "Work",
+        "B": "Shoot",
+        "C": "Call",
+        "D": "Mark",
+        "Answer": "A"
+    },
+    {
+        "Question": "Stone Cold Steve Austin helped usher in which era of the WWE?",
+        "A": "The Attitude Era",
+        "B": "The PG Era",
+        "C": "The Ruthless Agression Era",
+        "D": "The Golden Era",
+        "Answer": "A"
+    },
+    {
+        "Question": "What is it called when a Heel and a Face switch roles in a match?",
+        "A": "Pipebomb",
+        "B": "Shoot",
+        "C": "Double Turn",
+        "D": "Double Flip",
+        "Answer": "C"
+    },
+    {
+        "Question": "Some wrestlers cut themselves to cause bleeding during a match. What is this practice called?",
+        "A": "Blading",
+        "B": "Slicing",
+        "C": "Cutting",
+        "D": "Going Red",
+        "Answer": "A"
+    },
+    {
+        "Question": "How do wrestlers refer to winning a match?",
+        "A": "Going Over",
+        "B": "Jobbing",
+        "C": "Working",
+        "D": "Shooting",
+        "Answer": "A"
+    },
+    {
+        "Question": "What is referred to as \"Bret's Rope\"?",
+        "A": "The Tag Rope",
+        "B": "Third Rope of A Wrestling Ring",
+        "C": "Second Rope of A Wrestling Ring",
+        "D": "First Rope of A Wrestling Ring",
+        "Answer": "C"
+    },
+    {
+        "Question": "What does it mean when a wrestler is called a \"Carpenter\"?",
+        "A": "Undefeated in Tables Matches",
+        "B": "Introducer of a New Title Belt Design",
+        "C": "Enhancement Talent",
+        "D": "Maker of an Era",
+        "Answer": "C"
+    },
+    {
+        "Question": "What is known as \"The Champion's Advantage\"?",
+        "A": "Right to have their stable ringside during the match",
+        "B": "Retains the title if they lose By DQ or countout",
+        "C": "The crowd usually supports the champion",
+        "D": "Right to a rematch if they lose",
+        "Answer": "B"
+    },
+    {
+        "Question": "What is known as a \"Curtain Jerker Match\"?",
+        "A": "An Unpopular Match",
+        "B": "The Main Event",
+        "C": "The First Match Of The Card",
+        "D": "A Dark Match",
+        "Answer": "C"
+    },
+    {
+        "Question": "Which of these wrestlers is billed from Parts Unknown?",
+        "A": "Kane",
+        "B": "The Fiend",
+        "C": "The Undertaker",
+        "D": "Papa Shango",
+        "Answer": "D"
+    },
+    {
+        "Question": "Where did Wrestlemania 1 take place?",
+        "A": "Trump Plaza, New Jersey",
+        "B": "The Silverdome, Michigan",
+        "C": "Hoosier Dome, Indiana",
+        "D": "Madison Square Garden, New York",
+        "Answer": "D"
+    },
+    {
+        "Question": "Who called himself \"The Excellence of Execution\"?",
+        "A": "Bret Hart",
+        "B": "Shawn Michaels",
+        "C": "Kurt Angle",
+        "D": "Rick Rude",
+        "Answer": "A"
+    },
+    {
+        "Question": "Who did Edge eliminate to win the 2010 Royal Rumble Match?",
+        "A": "John Cena",
+        "B": "Randy Orton",
+        "C": "Chris Jericho",
+        "D": "Triple H",
+        "Answer": "A"
+    },
+    {
+        "Question": "In what year did The Undertaker make his WWE debut?",
+        "A": "1993",
+        "B": "1991",
+        "C": "1992",
+        "D": "1990",
+        "Answer": "D"
+    },
+    {
+        "Question": "At which event did Hulk Hogan join the nWo?",
+        "A": "Starrcade",
+        "B": "The Great American Bash",
+        "C": "SuperBrawl",
+        "D": "Bash at the Beach",
+        "Answer": "D"
+    },
+    {
+        "Question": "Who was the very first entrant to be eliminated in a Royal Rumble Match?",
+        "A": "Danny Davis",
+        "B": "Don Muraco",
+        "C": "Tito Santana",
+        "D": "Butch Reed",
+        "Answer": "D"
+    },
+    {
+        "Question": "In what year did the Money in the Bank Ladder Match debut?",
+        "A": "2005",
+        "B": "2004",
+        "C": "2006",
+        "D": "2007",
+        "Answer": "A"
+    },
+    {
+        "Question": "In what year did The Undertaker make his WWE debut?",
+        "A": "1993",
+        "B": "1990",
+        "C": "1991",
+        "D": "1992",
+        "Answer": "B"
+    },
+    {
+        "Question": "Which superstar had the most reigns as WWE Hardcore Champion?",
+        "A": "Mick Foley",
+        "B": "Raven",
+        "C": "Bradshaw",
+        "D": "Hardcore Holly",
+        "Answer": "B"
+    },
+    {
+        "Question": "Which of WWE’s Four Horsewomen made their main roster debut last?",
+        "A": "Becky Lynch",
+        "B": "Bayley",
+        "C": "Sasha Banks",
+        "D": "Charlotte",
+        "Answer": "B"
+    },
+    {
+        "Question": "Who defeated Masa Saito in a tournament final to become the inaugural IWGP Heavyweight Champion?",
+        "A": "Tatsumi Fujinami",
+        "B": "Keiji Mutoh",
+        "C": "Big Van Vader",
+        "D": "Antonio Inoki",
+        "Answer": "D"
+    },
+    {
+        "Question": "Who was the inaugural Open the Dream Gate Champion?",
+        "A": "Masaaki Mochizuki",
+        "B": "Ryo Saito",
+        "C": "Cima",
+        "D": "Don Fujii",
+        "Answer": "C"
+    },
+    {
+        "Question": "In what year did the WWE stable Evolution debut in?",
+        "A": "2003",
+        "B": "2006",
+        "C": "2005",
+        "D": "2004",
+        "Answer": "A"
+    },
+    {
+        "Question": "Who won the very first Hell in a Cell Match?",
+        "A": "Kane",
+        "B": "Mankind",
+        "C": "The Undertaker",
+        "D": "Shawn Michaels",
+        "Answer": "D"
+    },
+    {
+        "Question": "Who did Bret Hart defeat in the 1993 King of the Ring Tournament Final?",
+        "A": "Bam Bam Bigelow",
+        "B": "Razor Ramon",
+        "C": "Mr. Perfect",
+        "D": "Lex Luger",
+        "Answer": "A"
+    },
+    {
+        "Question": "Who won the very first Hell in a Cell Match?",
+        "A": "Kane",
+        "B": "Shawn Michaels",
+        "C": "The Undertaker",
+        "D": "Mankind",
+        "Answer": "B"
+    },
+    {
+        "Question": "Which of these 2010s heel stables was the most sucessful (in terms of title wins and title shots)",
+        "A": "League of nations",
+        "B": "The oc",
+        "C": "The nexus",
+        "D": "The dogs of war",
+        "Answer": "A"
+    },
+    {
+        "Question": "How long was Asuka’s undefeated streak in WWE?",
+        "A": "934",
+        "B": "904",
+        "C": "914",
+        "D": "924",
+        "Answer": "C"
+    },
+    {
+        "Question": "Who was the first ever King of the Ring?",
+        "A": "Stone Cold Steve Austin",
+        "B": "Don Muraco",
+        "C": "Harley Race",
+        "D": "William Regal",
+        "Answer": "B"
+    },
+    {
+        "Question": "Who was the second ever Mr. Money in the Bank",
+        "A": "Mr. Kennedy",
+        "B": "Jeff Hardy",
+        "C": "Rob Van Dam",
+        "D": "Edge",
+        "Answer": "C"
+    },
+    {
+        "Question": "Which wrestler took the least time to cash in their Money in the Bank contract?",
+        "A": "Alexa Bliss",
+        "B": "The Miz",
+        "C": "Dean Ambrose",
+        "D": "Kane",
+        "Answer": "D"
+    },
+    {
+        "Question": "Which wrestler took the longest to cash in their Money in the Bank contract?",
+        "A": "Edge",
+        "B": "Carmella",
+        "C": "Seth Rollins",
+        "D": "CM Punk",
+        "Answer": "B"
+    },
+    {
+        "Question": "Which wrestler has the most losses at Wrestlemania?",
+        "A": "Triple H",
+        "B": "Kane",
+        "C": "Big Show",
+        "D": "Shawn Michaels",
+        "Answer": "A"
+    },
+    {
+        "Question": "Which wreslter has the longest Intercontinental Championship reign in WWE history?",
+        "A": "Greg Valentine",
+        "B": "The Honky Tonk Man",
+        "C": "Hulk Hogan",
+        "D": "Pedro Morales",
+        "Answer": "B"
+    },
+    {
+        "Question": "Which wrestler has the longest United States Championship reign in WWE history?",
+        "A": "Kurt Angle",
+        "B": "Hulk Hogan",
+        "C": "John Cena",
+        "D": "Lex Luger",
+        "Answer": "D"
+    },
+    {
+        "Question": "Which wrestler has the longest WWE Championship reign in history?",
+        "A": "John Cena",
+        "B": "CM Punk",
+        "C": "Bruno Sammartino",
+        "D": "Hulk Hogan",
+        "Answer": "C"
+    },
+    {
+        "Question": "Which match main evented Wrestlemania 25?",
+        "A": "The Undertaker vs Shawn Michaels",
+        "B": "Triple H vs Batista",
+        "C": "Triple H vs Randy Orton",
+        "D": "Randy Orton vs John Cena",
+        "Answer": "C"
+    },
+    {
+        "Question": "Against whom did The Undertaker win in Wrestlemania by DQ?",
+        "A": "Giant Gonzales",
+        "B": "Jake \"The Snake\" Roberts",
+        "C": "King Kong Bundy",
+        "D": "Jimmy \"Superfly\" Snuka",
+        "Answer": "A"
+    },
+    {
+        "Question": "Who were on the Money in the Bank 2011 poster?",
+        "A": "All contestants of that year's MITB Ladder Match",
+        "B": "John Cena and CM Punk",
+        "C": "The Bella Twins",
+        "D": "Big Show and Hornswoggle",
+        "Answer": "D"
+    },
+    {
+        "Question": "Who was the tallest ever WWE wrestler? (Billed height)",
+        "A": "The Great Khali",
+        "B": "Giant Gonzales",
+        "C": "The Undertaker",
+        "D": "Big Cass",
+        "Answer": "B"
+    },
+    {
+        "Question": "At which Wrestlemania did Brock Lesnar attempt a shooting star press?",
+        "A": "Wresltemania 19",
+        "B": "Wrestlemania 21",
+        "C": "Wrestlemania 17",
+        "D": "Wrestlemania 20",
+        "Answer": "A"
+    },
+    {
+        "Question": "Against which wrestler did Shawn Michaels wrestle a 5 star match with?",
+        "A": "Kevin Nash",
+        "B": "Triple H",
+        "C": "Kurt Angle",
+        "D": "Razor Ramon",
+        "Answer": "D"
+    },
+    {
+        "Question": "Against which wrestler did \"Stone Cold\" Steve Austin wrestle his last ever match with?",
+        "A": "Shawn Michaels",
+        "B": "The Undertaker",
+        "C": "Vince McMahon",
+        "D": "The Rock",
+        "Answer": "D"
+    },
+    {
+        "Question": "Which is John Cena's first ever movie?",
+        "A": "Fred : The Movie",
+        "B": "The Marine",
+        "C": "Legendary",
+        "D": "12 Rounds",
+        "Answer": "B"
+    },
+    {
+        "Question": "How many Make-A-Wish requests has John Cena granted? (Approx.)",
+        "A": "300",
+        "B": "400",
+        "C": "500",
+        "D": "600",
+        "Answer": "D"
+    },
+    {
+        "Question": "Which wrestler has the most Royal Rumble wins?",
+        "A": "\"Stone Cold\" Steve Austin",
+        "B": "John Cena",
+        "C": "Triple H",
+        "D": "Shawn Michaels",
+        "Answer": "A"
+    },
+    {
+        "Question": "Who was the first ever Royal Rumble winner?",
+        "A": "Hulk Hogan",
+        "B": "\"Hacksaw\" Jim Duggan",
+        "C": "Shawn Michaels",
+        "D": "Bret \"The Hitman\" Hart",
+        "Answer": "B"
     }
 ]
