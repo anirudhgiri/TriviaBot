@@ -7,26 +7,30 @@ const fs = require("fs")
 const questions = JSON.parse(fs.readFileSync("questions.json"))
 
 let guild = " "
-let hitRate = 0.01
-let prefix = '~'
+let hitRate = 0.02
+let prefix = '='
 
 let ChampRoleID = process.env.CHAMP_ROLE_ID
 let AdminRoleID = process.env.ADMIN_ROLE_ID
+let RefRoleID   = process.env.REF_ROLE_ID
+let SideRoleID  = process.env.SIDE_ROLE_ID
 
 let currentChampion
+let preChamp = false
 
 let inTriviaMode = false
 let start
 let eventChannel
 let submissions = "Submissions Received:"
 let contestants = []
+let players = []
 let answer
 
 let trigMessage
 
 let giflinks = ['LyJ6KPlrFdKnK','NRXleEopnqL3a','26BkLCUdp1lqUA2JO','doJrCO8kCAgNy','ELTNW5yGKbn9K','WegnQe8QdvpCg']
 let gif_user = ' '
-let gifMessages = ['TEST']
+let gifMessages = []
 let gifReplies = ["...did you just say...you can't say that on a PG server...", "wh-- what the hell did you just say?", ".....that's your answer?", "....did you seriously say that on a PG server?"]
 
 client.login(process.env.CLIENT_TOKEN)
@@ -60,14 +64,16 @@ function processCommand(message){
         case "ping" : ping(message)
                       break
         
-        case "prefix" : changePrefix(message,msg[1])
+        case "prefix" : if(message.member.roles.has(AdminRoleID))
+                            changePrefix(message,msg[1])
                         break
         
-        case "trivia" : if(message.member.roles.has(AdminRoleID))
+        case "trivia" : if(message.member.roles.has(AdminRoleID)||message.member.roles.has(RefRoleID))
                             spawnTrivia(message)
                         break
         
-        case "hitrate" : setHitRate(message,msg[1])
+        case "hitrate" : if(message.member.roles.has(AdminRoleID))
+                            setHitRate(message,msg[1])
                         break
         
         case "help" : help(message)
@@ -85,27 +91,26 @@ function processCommand(message){
 function help(message){
     let embed = new discord.RichEmbed()
     .setColor("#FFD700")
-    .setDescription(`:trophy::trophy::trophy: **TRIVIA BOT V1.0.0** :trophy::trophy::trophy:
+    .setDescription(`:trophy::trophy::trophy: **TRIVIA BOT V1.0.1** :trophy::trophy::trophy:
     Prefix           : \`${prefix}\`
-    Ping             : \`${Math.floor(message.client.ping/100)}ms\`
+    Ping             : \`${Math.round((Date.now()-message.createdTimestamp))}ms\`
     Hit Rate         : \`${hitRate*100}%\`
     Current Champion : \`${(getCurrentChampion()?getCurrentChampion().user.tag : "Vacant")}\`
     ---*Commands*---
     \`${prefix}ping\` : Ping time in milliseconds
     \`${prefix}currentchamp\` : Tells you who the current champion is
-    \`${prefix}prefix (STAFF ONLY)\` : Chances the prefix for commands
+    \`${prefix}prefix (STAFF ONLY)\` : Changes the prefix for commands
     \`${prefix}trivia (STAFF ONLY)\` : Forces a trivia event
     \`${prefix}hitrate (STAFF ONLY)\` : Changes the % probability of a trivia event spawning
     `)
     message.channel.send(embed)
 }
-
 /**
  * 
  * @param {discord.Message} message The message identified as a command
  */
 function ping(message){
-    message.reply(`Pong! \`${Math.floor(message.client.ping/100)}ms\``)
+    message.reply(`Pong! \`${Math.round((Date.now()-message.createdTimestamp))}ms\``)
 }
 
 /**
@@ -147,10 +152,8 @@ function getCurrentChampion(message){
  */
 function currentchamp(message){
     champ = getCurrentChampion()
-    if(champ)
-        message.channel.send(`:trophy:The current Harcore Champion is \`${champ.nickname}(${champ.user.tag})\`!:trophy:`)
-    else
-        message.channel.send(`:trophy:The current Harcore Champion is \`Vacant\`!:trophy:`)
+    champName = champ?champ.nickname?`${champ.nickname}(${champ.user.tag})`:`${champ.user.tag}`:"Vacant"
+    message.channel.send(`:trophy:The current 24/7 Champion is \`${champName}\`!:trophy:`)
    }
 
 /**
@@ -164,7 +167,7 @@ function spawnTrivia(message){
         let embed = new discord.RichEmbed()
         .setColor("#FFD700")
         .setDescription(`:trophy::rotating_light::rotating_light: ***TRIVIA TIME!!*** :rotating_light::rotating_light::trophy:\n\n**QUESTION :**\n*${trivia.Question}*\n\nA) ${trivia.A}\nB) ${trivia.B}\nC) ${trivia.C}\nD) ${trivia.D}\n\n:trophy::trophy::trophy::trophy::trophy::trophy::trophy::trophy::trophy::trophy:`)
-        .setFooter(`Which option (A/B/C/D) do you think is correct? You have 10 seconds to enter the correct answer for a chance to win the Hardcore Championship!`)
+        .setFooter(`Which option (A/B/C/D) do you think is correct? You have 10 seconds to enter the correct answer for a chance to win the 24/7 Championship!`)
     
         message.channel.send(embed).then(()=>{
             message.channel.send("\`\`\`"+submissions+"\`\`\`")
@@ -192,16 +195,18 @@ function spawnTrivia(message){
                 gif_user = ' '
             }, 5000);
             contestants = []
+            players = []
             eventChannel = null
         },10000)
         return
     }
     else{
         let sub = message.content.trim().toUpperCase()
-        if(contestants.includes(message.author))
+        if(players.includes(message.member))
             return
         if(sub.length == 1 && (sub == 'A' || sub == 'B' || sub == 'C' || sub == 'D')){
-           submissions += `\n${message.author.username}`
+            players.push(message.member)
+            submissions += `\n${message.author.username}`
             client.user.lastMessage.edit("\`\`\`"+submissions+"\`\`\`")
             if(sub == answer)
                 contestants.push(message.member)
@@ -221,11 +226,21 @@ function makeChampion(winner,eventChannel){
     if(!winner || getCurrentChampion() == winner)
         eventChannel.send(`🥊🥊🥊 ${getCurrentChampion()} has successfully defended the title!! 🥊🥊🥊`)
     else{
-    eventChannel.send(`🎉🎉🎉${winner.toString()} is the new Hardcore Champion!! 🎉🎉🎉`)
+    eventChannel.send(`🎉🎉🎉${winner.toString()} is the new 24/7 Champion!! 🎉🎉🎉`)
     hc_role = eventChannel.guild.roles.get(ChampRoleID)
-    if(getCurrentChampion())
+    side_role = eventChannel.guild.roles.get(SideRoleID)
+    if(getCurrentChampion()){
+    if(!preChamp)
+        getCurrentChampion().removeRole(side_role)
     getCurrentChampion().removeRole(hc_role)
+    }
     winner.addRole(hc_role)
+    if(winner.roles.has(SideRoleID))
+        preChamp = true
+    else{
+        preChamp = false
+        winner.addRole(side_role)
+    }
     }
 }
 
